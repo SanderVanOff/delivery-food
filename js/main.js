@@ -42,6 +42,8 @@ const cart = [];
 const addBurgerButton = () => {
   let clientWidth = document.documentElement.clientWidth;
 
+  buttonsBlock.style.display = "flex";
+
   if (clientWidth < 520) {
     burgerButton.style.display = "flex";
     buttonsBlock.style.display = "none";
@@ -354,7 +356,6 @@ function changeCount(event) {
       }
     }
     if (target.classList.contains("counter-plus")) food.count++;
-    addBurgerButton();
     renderCart();
   }
   saveCart();
