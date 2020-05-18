@@ -52,7 +52,6 @@ window.addEventListener("resize", () => {
   clientWidth = document.documentElement.clientWidth;
   if (clientWidth < 520) {
     burgerButton.style.display = "flex";
-    buttonsBlock.style.display = "none";
   } else {
     burgerButton.style.display = "none";
   }
@@ -215,7 +214,13 @@ function createCardRestaurant({
 }
 
 /* СОЗДАНИЕ КАРТОЧКИ ТОВАРА */
-function createCardGood({ description, id, image, name, price }) {
+function createCardGood({
+  description,
+  id,
+  image,
+  name,
+  price
+}) {
   const card = document.createElement("div");
   card.className = "card wow animate__animated animate__fadeInUp";
   card.id = id;
@@ -305,7 +310,12 @@ function addToCart(event) {
 // РЕНДЕР КОРЗИНЫ
 function renderCart() {
   modalBody.textContent = "";
-  cart.forEach(function ({ id, title, cost, count }) {
+  cart.forEach(function ({
+    id,
+    title,
+    cost,
+    count
+  }) {
     const itemCart = `
 				<div class="food-row">
 					<span class="food-name">${title}</span>
