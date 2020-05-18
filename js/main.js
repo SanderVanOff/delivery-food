@@ -26,12 +26,66 @@ const inputSearch = document.querySelector(".input-search");
 const modalBody = document.querySelector(".modal-body");
 const modalPrice = document.querySelector(".modal-pricetag");
 const buttonClearCart = document.querySelector(".clear-cart");
+const burgerButton = document.querySelector("#burger");
+const buttonsBlock = document.querySelector(".buttons");
+const inputAddress = document.querySelector(".address");
 
+// ПОЛУЧЕНИЕ ЛОГИНА В ЛОКАЛСТОРЭДЖ
 let login = localStorage.getItem("deliveryLogin");
 
+// КОРЗИНА
 const cart = [];
 
+// БУРГЕР
+
+let clientWidth = document.documentElement.clientWidth;
+
+if (clientWidth < 520) {
+  burgerButton.style.display = "flex";
+  buttonsBlock.style.display = "none";
+} else {
+  burgerButton.style.display = "none";
+}
+
+//Скрытие значка бургер меню при увеличении разрешения окна
+window.addEventListener("resize", () => {
+  clientWidth = document.documentElement.clientWidth;
+  if (clientWidth < 520) {
+    burgerButton.style.display = "flex";
+    buttonsBlock.style.display = "none";
+  } else {
+    burgerButton.style.display = "none";
+  }
+});
+
+burgerButton.addEventListener("click", () => {
+  if (burgerButton.classList.contains("active")) {
+    burgerButton.classList.remove("active");
+    logo.style.display = "";
+    buttonsBlock.style.order = "";
+    burgerButton.style.order = "";
+    inputAddress.style.order = "";
+    buttonsBlock.style.display = "none";
+    userName.style.opacity = "0";
+    cartButton.style.opacity = "0";
+    buttonAuth.style.opacity = "0";
+    buttonOut.style.opacity = "0";
+  } else {
+    burgerButton.classList.add("active");
+    logo.style.display = "none";
+    buttonsBlock.style.display = "";
+    buttonsBlock.style.order = "0";
+    burgerButton.style.order = "1";
+    inputAddress.style.order = "2";
+    cartButton.style.opacity = "1";
+    buttonAuth.style.opacity = "1";
+    buttonOut.style.opacity = "1";
+    userName.style.opacity = "1";
+  }
+});
+
 // ФУНКЦИИ
+
 const loadCart = function () {
   if (localStorage.getItem(login)) {
     JSON.parse(localStorage.getItem(login)).forEach(function (item) {
@@ -39,30 +93,31 @@ const loadCart = function () {
     });
   }
 };
-
+// СОХРАНЕНИЕ КОРЗИНЫ
 const saveCart = function () {
   localStorage.setItem(login, JSON.stringify(cart));
 };
-
+// ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ТОВАРАХ С ФАЙЛА JSON
 const getData = async function (url) {
   const response = await window.fetch(url);
 
+  // Ошибка, если данные не получены
   if (!response.ok) {
     throw new Error(`Ошибка по адресу ${url}, 
     статус ошибки ${response.status}!`);
   }
   return await response.json();
 };
-
+// ДОБАВЛЕНИЕ РЕГУЛЯРНОГО ВЫРАЖЕНИЯ ДЛЯ ЛОГИНА
 const valid = function (str) {
   const nameReg = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
   return nameReg.test(str);
 };
-
+// ОТКРЫТИЕ МОДАЛЬНОГО ОКНА
 function toggleModal() {
   modal.classList.toggle("is-open");
 }
-
+// ОТКРЫТИЕ МОДАЛЬНОГО ОКНА АВТОРИЗАЦИИ
 function toogleModalAuth() {
   modalAuth.classList.toggle("is-open");
   loginInput.style.borderColor = "";
@@ -73,7 +128,7 @@ function returnMain() {
   restaurants.classList.remove("hide");
   menu.classList.add("hide");
 }
-
+// АВТОРИЗАЦИЯ
 function authorized() {
   function logOut() {
     login = null;
@@ -88,8 +143,6 @@ function authorized() {
     returnMain();
   }
 
-  console.log("Авторизован");
-
   userName.textContent = login;
   buttonAuth.style.display = "none";
   buttonOut.style.display = "flex";
@@ -100,8 +153,6 @@ function authorized() {
 } //функция, если пользователь авторизован
 
 function notAuthorized() {
-  console.log("Не авторизован");
-
   function logIn(event) {
     event.preventDefault();
 
@@ -124,7 +175,7 @@ function notAuthorized() {
   closeAuth.addEventListener("click", toogleModalAuth);
   logInForm.addEventListener("submit", logIn);
 } //функция, если пользователь не авторизован
-/* АВТОРИЗАЦИЯ */
+/* ПРОВЕРКА НА АВТОРИЗАЦИЮ */
 function checkAuth() {
   if (login) {
     authorized();
@@ -164,13 +215,7 @@ function createCardRestaurant({
 }
 
 /* СОЗДАНИЕ КАРТОЧКИ ТОВАРА */
-function createCardGood({
-  description,
-  id,
-  image,
-  name,
-  price
-}) {
+function createCardGood({ description, id, image, name, price }) {
   const card = document.createElement("div");
   card.className = "card wow animate__animated animate__fadeInUp";
   card.id = id;
@@ -257,19 +302,14 @@ function addToCart(event) {
   }
   saveCart();
 }
-
+// РЕНДЕР КОРЗИНЫ
 function renderCart() {
   modalBody.textContent = "";
-  cart.forEach(function ({
-    id,
-    title,
-    cost,
-    count
-  }) {
+  cart.forEach(function ({ id, title, cost, count }) {
     const itemCart = `
 				<div class="food-row">
 					<span class="food-name">${title}</span>
-					<strong class="food-price">${cost} ₽</strong>
+					<strong class="food-price">${cost}</strong>
 					<div class="food-counter">
 						<button class="counter-button counter-minus" data-id="${id}">-</button>
 						<span class="counter">${count}</span>
@@ -285,7 +325,7 @@ function renderCart() {
 
   modalPrice.textContent = totalPrice + " ₽";
 }
-
+// ИЗМЕНЕНИЕ КОЛИЧЕСТВА ТОВАРА В КОРЗИНЕ
 function changeCount(event) {
   const target = event.target;
 
@@ -306,6 +346,7 @@ function changeCount(event) {
   saveCart();
 }
 
+// ИНИЦИАЛИЗАЦИЯ
 function init() {
   /* ОБРАБОТЧИКИ СОБЫТИЙ */
 
@@ -354,9 +395,9 @@ function init() {
         }, 2000);
         return;
       }
-
+      // МАССИВ ТОВАРОВ
       const goods = [];
-
+      // ПОЛУЧЕНИЕ ТОВАВАРОВ С БАЗЫ ДАННЫХ JSON
       getData("./db/partners.json").then(function (data) {
         const products = data.map(function (item) {
           return item.products;

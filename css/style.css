@@ -59,6 +59,39 @@ button {
 
 }
 
+.burger {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.burger span {
+    width: 100%;
+    height: 5px;
+    display: block;
+    background-color: #595959;
+    transition: all 0.3s;
+}
+
+.burger.active span:nth-child(1) {
+    transform: rotate(45deg)translate(8px, 14px);
+}
+
+
+.burger.active span:nth-child(2) {
+    transform: rotate(-45deg)translate(-5px, 5px);
+    opacity: 0;
+}
+
+
+.burger.active span:nth-child(3) {
+    transform: rotate(-45deg)translate(4px, -9px);
+}
+
 .buttons {
     display: flex;
     align-items: center;
@@ -163,6 +196,7 @@ button {
     font-weight: bold;
     font-size: 18px;
 }
+
 
 .promo-slider {
 
@@ -455,11 +489,12 @@ button {
 
 .is-open {
     display: flex;
+    justify-content: center;
 }
 
 .modal-dialog {
     max-width: 780px;
-    width: 95%;
+    width: 90%;
     background: #ffffff;
     border-radius: 5px;
     margin: auto;
@@ -679,6 +714,21 @@ button {
         max-width: 560px;
     }
 
+    .address {
+        min-width: 100%;
+        order: 1;
+    }
+
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .input-address {
+        margin-top: 15px;
+        order: 5;
+        flex: 1;
+    }
+
     .card-info {
         flex-wrap: wrap;
     }
@@ -801,7 +851,37 @@ button {
     }
 }
 
+@media (max-width: 530px) {
+    .modal-footer {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .footer-buttons {
+        margin: 20px 0 0 0;
+    }
+
+}
+
+@media (max-width: 500px) {
+    .food-row {
+        flex-direction: column;
+    }
+
+    .food-price {
+        margin-right: 0;
+    }
+
+    .food-counter {
+        margin: 0 0 10px 0;
+    }
+}
+
 @media (max-width: 480px) {
+    .burger {
+        margin-left: 10px;
+    }
+
     .button-text {
         display: none;
     }
@@ -863,5 +943,40 @@ button {
 
     .footer-link:not(:last-child) {
         margin-right: 0;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .modal-footer {
+        align-items: center;
+    }
+
+    .footer-buttons {
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .footer-buttons .button {
+        display: block;
+        width: 100%;
+        margin: 15px 0 0 0;
+    }
+}
+
+@media (max-width: 320px) {
+    .address {
+        min-width: 100%;
+        order: 1;
+    }
+
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .input-address {
+        margin-top: 15px;
+        order: 5;
+        flex: 1;
     }
 }
