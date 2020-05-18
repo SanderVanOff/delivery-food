@@ -38,52 +38,54 @@ const cart = [];
 
 // БУРГЕР
 
-let clientWidth = document.documentElement.clientWidth;
 
-if (clientWidth < 520) {
-  burgerButton.style.display = "flex";
-  buttonsBlock.style.display = "none";
-} else {
-  burgerButton.style.display = "none";
-  buttonsBlock.style.display = "";
-}
+const addBurgerButton = () => {
+  let clientWidth = document.documentElement.clientWidth;
 
-//Скрытие значка бургер меню при увеличении разрешения окна
-window.addEventListener("resize", () => {
-  clientWidth = document.documentElement.clientWidth;
   if (clientWidth < 520) {
     burgerButton.style.display = "flex";
+    buttonsBlock.style.display = "none";
   } else {
     burgerButton.style.display = "none";
-  }
-});
-
-burgerButton.addEventListener("click", () => {
-  if (burgerButton.classList.contains("active")) {
-    burgerButton.classList.remove("active");
-    logo.style.display = "";
-    buttonsBlock.style.order = "";
-    burgerButton.style.order = "";
-    inputAddress.style.order = "";
-    buttonsBlock.style.display = "none";
-    userName.style.opacity = "0";
-    cartButton.style.opacity = "0";
-    buttonAuth.style.opacity = "0";
-    buttonOut.style.opacity = "0";
-  } else {
-    burgerButton.classList.add("active");
-    logo.style.display = "none";
     buttonsBlock.style.display = "";
-    buttonsBlock.style.order = "0";
-    burgerButton.style.order = "1";
-    inputAddress.style.order = "2";
-    cartButton.style.opacity = "1";
-    buttonAuth.style.opacity = "1";
-    buttonOut.style.opacity = "1";
-    userName.style.opacity = "1";
   }
-});
 
+  //Скрытие значка бургер меню при увеличении разрешения окна
+  window.addEventListener("resize", () => {
+    clientWidth = document.documentElement.clientWidth;
+    if (clientWidth < 520) {
+      burgerButton.style.display = "flex";
+    } else {
+      burgerButton.style.display = "none";
+    }
+  });
+  burgerButton.addEventListener("click", () => {
+    if (burgerButton.classList.contains("active")) {
+      burgerButton.classList.remove("active");
+      logo.style.display = "";
+      buttonsBlock.style.order = "";
+      burgerButton.style.order = "";
+      inputAddress.style.order = "";
+      buttonsBlock.style.display = "none";
+      userName.style.opacity = "0";
+      cartButton.style.opacity = "0";
+      buttonAuth.style.opacity = "0";
+      buttonOut.style.opacity = "0";
+    } else {
+      burgerButton.classList.add("active");
+      logo.style.display = "none";
+      buttonsBlock.style.display = "";
+      buttonsBlock.style.order = "0";
+      burgerButton.style.order = "1";
+      inputAddress.style.order = "2";
+      cartButton.style.opacity = "1";
+      buttonAuth.style.opacity = "1";
+      buttonOut.style.opacity = "1";
+      userName.style.opacity = "1";
+    }
+  });
+};
+addBurgerButton();
 // ФУНКЦИИ
 
 const loadCart = function () {
@@ -352,6 +354,7 @@ function changeCount(event) {
       }
     }
     if (target.classList.contains("counter-plus")) food.count++;
+    addBurgerButton();
     renderCart();
   }
   saveCart();
@@ -360,7 +363,6 @@ function changeCount(event) {
 // ИНИЦИАЛИЗАЦИЯ
 function init() {
   /* ОБРАБОТЧИКИ СОБЫТИЙ */
-
   /* МОДАЛЬНОЕ ОКНО */
   getData("./db/partners.json").then(function (data) {
     data.forEach(createCardRestaurant);
@@ -384,6 +386,7 @@ function init() {
 
   /* ВКЛЮЧЕНИЕ КАРТОЧЕК ТОВАРОВ */
   cardsRestaurants.addEventListener("click", openGoods);
+
 
   /* ВОЗВРАТ КАРТОЧЕК РЕСТОРАНОВ */
   logo.addEventListener("click", returnMain);
