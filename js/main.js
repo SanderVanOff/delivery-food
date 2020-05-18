@@ -45,6 +45,7 @@ if (clientWidth < 520) {
   buttonsBlock.style.display = "none";
 } else {
   burgerButton.style.display = "none";
+  buttonsBlock.style.display = "";
 }
 
 //Скрытие значка бургер меню при увеличении разрешения окна
