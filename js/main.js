@@ -227,7 +227,7 @@ function createCardGood({
   price
 }) {
   const card = document.createElement("div");
-  card.className = "card wow animate__animated animate__fadeInRightBig";
+  card.className = "card wow animate__animated animate__flipInY";
   card.id = id;
   card.insertAdjacentHTML(
     "beforeend",
