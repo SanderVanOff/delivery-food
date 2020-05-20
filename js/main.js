@@ -102,6 +102,7 @@ const saveCart = () => {
 };
 // ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ТОВАРАХ С ФАЙЛА JSON
 const getData = async function (url) {
+
   const response = await window.fetch(url);
 
   // Ошибка, если данные не получены
@@ -226,7 +227,7 @@ function createCardGood({
   price
 }) {
   const card = document.createElement("div");
-  card.className = "card wow animate__animated animate__fadeInUp";
+  card.className = "card wow animate__animated animate__fadeInRightBig";
   card.id = id;
   card.insertAdjacentHTML(
     "beforeend",
@@ -274,9 +275,21 @@ function openGoods(event) {
       minPrice.textContent = `От ${price} ₽`;
       category.textContent = kitchen;
 
-      getData(`./db/${restaurant.dataset.products}`).then(function (data) {
-        data.forEach(createCardGood);
-      });
+
+      cardsMenu.style.display = 'flex';
+      cardsMenu.style.justifyContent = 'center';
+      cardsMenu.style.alignItems = 'center';
+      cardsMenu.innerHTML = `<img src="./img/loader.gif">`;
+      setTimeout(() => {
+        cardsMenu.innerHTML = '';
+        cardsMenu.style.display = '';
+        cardsMenu.style.justifyContent = '';
+        cardsMenu.style.alignItems = '';
+        getData(`./db/${restaurant.dataset.products}`).then(function (data) {
+          data.forEach(createCardGood);
+        });
+      }, 1000)
+
     } else {
       toogleModalAuth();
     }
