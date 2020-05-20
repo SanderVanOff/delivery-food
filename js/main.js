@@ -102,7 +102,6 @@ const saveCart = () => {
 };
 // ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ТОВАРАХ С ФАЙЛА JSON
 const getData = async function (url) {
-
   const response = await window.fetch(url);
 
   // Ошибка, если данные не получены
@@ -219,13 +218,7 @@ function createCardRestaurant({
 }
 
 /* СОЗДАНИЕ КАРТОЧКИ ТОВАРА */
-function createCardGood({
-  description,
-  id,
-  image,
-  name,
-  price
-}) {
+function createCardGood({ description, id, image, name, price }) {
   const card = document.createElement("div");
   card.className = "card wow animate__animated animate__flipInY";
   card.id = id;
@@ -275,21 +268,19 @@ function openGoods(event) {
       minPrice.textContent = `От ${price} ₽`;
       category.textContent = kitchen;
 
-
-      cardsMenu.style.display = 'flex';
-      cardsMenu.style.justifyContent = 'center';
-      cardsMenu.style.alignItems = 'center';
+      cardsMenu.style.display = "flex";
+      cardsMenu.style.justifyContent = "center";
+      cardsMenu.style.alignItems = "center";
       cardsMenu.innerHTML = `<img src="./img/loader.gif">`;
       setTimeout(() => {
-        cardsMenu.innerHTML = '';
-        cardsMenu.style.display = '';
-        cardsMenu.style.justifyContent = '';
-        cardsMenu.style.alignItems = '';
+        cardsMenu.innerHTML = "";
+        cardsMenu.style.display = "";
+        cardsMenu.style.justifyContent = "";
+        cardsMenu.style.alignItems = "";
         getData(`./db/${restaurant.dataset.products}`).then(function (data) {
           data.forEach(createCardGood);
         });
-      }, 1000)
-
+      }, 1000);
     } else {
       toogleModalAuth();
     }
@@ -300,22 +291,20 @@ function openGoods(event) {
 function addToCart(event) {
   const target = event.target;
   const buttonAddToCart = target.closest(".button-add-cart");
-  const windowAddedGood = document.querySelector('.window-added');
+  const windowAddedGood = document.querySelector(".window-added");
 
   const addGoodToCart = () => {
     const card = target.closest(".card");
     if (buttonAddToCart) {
-      const addWindow = document.createElement('div');
-      addWindow.className = 'window-added animate__animated animate__fadeInUp';
+      const addWindow = document.createElement("div");
+      addWindow.className = "window-added animate__animated animate__fadeInUp";
       addWindow.innerHTML = `<p>Товар добавлен в корзину</p>`;
       card.append(addWindow);
-      setTimeout(() => addWindow.remove(), 1000);
+      setTimeout(() => addWindow.remove(), 2000);
     }
-  }
+  };
 
   requestAnimationFrame(addGoodToCart);
-
-
 
   // addGoodToCart();
   if (buttonAddToCart) {
@@ -337,19 +326,13 @@ function addToCart(event) {
         count: 1,
       });
     }
-
   }
   saveCart();
 }
 // РЕНДЕР КОРЗИНЫ
 function renderCart() {
   modalBody.textContent = "";
-  cart.forEach(function ({
-    id,
-    title,
-    cost,
-    count
-  }) {
+  cart.forEach(function ({ id, title, cost, count }) {
     const itemCart = `
 				<div class="food-row">
 					<span class="food-name">${title}</span>
