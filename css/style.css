@@ -281,6 +281,7 @@ button {
     text-decoration: none;
     transform: scale(1);
     transition: all 0.7s;
+    position: relative;
 
 }
 
@@ -499,6 +500,7 @@ button {
     border-radius: 5px;
     margin: auto;
     padding: 40px 45px;
+    transition: all, 0.7s;
 }
 
 .modal-dialog-auth {
@@ -979,4 +981,23 @@ button {
         order: 5;
         flex: 1;
     }
+}
+
+.window-added {
+    width: 80%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    margin: 0 25px 0 25px;
+    background: rgba(135, 206, 250, 0.9);
+    color: white;
+    transition: all, 0.7s;
+}
+
+.d-none {
+    display: none;
 }

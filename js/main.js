@@ -38,7 +38,6 @@ const cart = [];
 
 // БУРГЕР
 
-
 const addBurgerButton = () => {
   let clientWidth = document.documentElement.clientWidth;
 
@@ -98,7 +97,7 @@ const loadCart = function () {
   }
 };
 // СОХРАНЕНИЕ КОРЗИНЫ
-const saveCart = function () {
+const saveCart = () => {
   localStorage.setItem(login, JSON.stringify(cart));
 };
 // ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ТОВАРАХ С ФАЙЛА JSON
@@ -113,7 +112,7 @@ const getData = async function (url) {
   return await response.json();
 };
 // ДОБАВЛЕНИЕ РЕГУЛЯРНОГО ВЫРАЖЕНИЯ ДЛЯ ЛОГИНА
-const valid = function (str) {
+const valid = (str) => {
   const nameReg = /^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/;
   return nameReg.test(str);
 };
@@ -287,9 +286,25 @@ function openGoods(event) {
 //ДОБАВЛЕНИЕ ТОВАРОВ В КОРЗИНУ
 function addToCart(event) {
   const target = event.target;
-
   const buttonAddToCart = target.closest(".button-add-cart");
+  const windowAddedGood = document.querySelector('.window-added');
 
+  const addGoodToCart = () => {
+    const card = target.closest(".card");
+    if (buttonAddToCart) {
+      const addWindow = document.createElement('div');
+      addWindow.className = 'window-added animate__animated animate__fadeInUp';
+      addWindow.innerHTML = `<p>Товар добавлен в корзину</p>`;
+      card.append(addWindow);
+      setTimeout(() => addWindow.remove(), 1000);
+    }
+  }
+
+  requestAnimationFrame(addGoodToCart);
+
+
+
+  // addGoodToCart();
   if (buttonAddToCart) {
     const card = target.closest(".card");
     const title = card.querySelector(".card-title-reg").textContent;
@@ -309,6 +324,7 @@ function addToCart(event) {
         count: 1,
       });
     }
+
   }
   saveCart();
 }
@@ -387,7 +403,6 @@ function init() {
 
   /* ВКЛЮЧЕНИЕ КАРТОЧЕК ТОВАРОВ */
   cardsRestaurants.addEventListener("click", openGoods);
-
 
   /* ВОЗВРАТ КАРТОЧЕК РЕСТОРАНОВ */
   logo.addEventListener("click", returnMain);
