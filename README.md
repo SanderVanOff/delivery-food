@@ -19,7 +19,7 @@
   - Сохранение результатов в Local Storage;
   - страница добавлена на GitHub
 
-Ссылка: https://sanderbest.github.io/delivery-food/
+Ссылка: https://sandervanoff.github.io/delivery-food/
 
 ![YRzsqQmeRDpkkRHF](https://user-images.githubusercontent.com/61217980/129889336-7dd460ea-c6f1-4a93-9807-ec7d95d865f1.png)
 
